@@ -1,5 +1,7 @@
 class Vending_machine
 
+	attr_accessor :coins
+
 	def initialize
 		@tango 	= Product.new "Tango",	150.0, 20
 		@kitkat = Product.new "KitKat",	200.0, 10
@@ -7,24 +9,11 @@ class Vending_machine
 		@coins 	= Coins.new 5, 5, 5, 5, 5, 5, 2, 2
 	end
 
-	# def change
-	# 	{
-	# 		"1p"	=> 10,
-	# 		"2p"	=> 10,
-	# 		"5p" 	=> 10,
-	# 		"10p" 	=> 10,
-	# 		"20p" 	=> 8,
-	# 		"50p" 	=> 8,
-	# 		"£1" 	=> 5,
-	# 		"£2" 	=> 5
-	# 	}
-	# end
-
 	def products
 		[@tango, @kitkat, @pepsi]
 	end
 
-	def coins
+	def available_coins
 		@vending_machine_coins = []
 		@coins.one_p.times {@vending_machine_coins << 1}
 		@coins.two_p.times {@vending_machine_coins << 2}
@@ -36,8 +25,6 @@ class Vending_machine
 		@coins.two_pounds.times {@vending_machine_coins << 200}
 		@vending_machine_coins
 	end
-
-
 
 	def products_names
 		products.map{|p| p.name}
@@ -61,19 +48,6 @@ class Vending_machine
 		p[0].price
 	end
 
-	# def convert(price)
-	# 	if price.class == Fixnum || price.class == Float
-	# 		return "#{price.to_i}p" if price < 100
-	# 		return "£#{price.to_i/100}" if price >= 100
-	# 	end
-
-	# 	if price.class == String
-	# 		return price.to_f if price.include? "p"
-	# 		return(price.delete("£").to_f)*100 if price.include? "£"
-
-	# 	end
-	# end
-
 	def convert(cash)
 		if cash.class == String
 			return cash.to_f if cash.include? "p"
@@ -89,10 +63,11 @@ class Vending_machine
 	def buy(product, amount)
 		new_price = convert(amount)
 
-		return "There are no more #{selected(product).name}" if remaining(product)==0
+		return "There are no more #{selected(product).name}" if remaining(product) == 0
 		
 		if new_price == price(product)
 			selected(product).one_less
+			@coins.receive(amount)
 			return "Your product:\n #{selected(product).name}"
 		end
 
