@@ -26,32 +26,32 @@ class Coins
 	end
 
 	def total
-		(@one_p 		* values["1p"]) 	+ 
-		(@two_p 		* values["2p"]) 	+ 
-		(@five_p 		* values["5p"]) 	+ 
-		(@ten_p 		* values["10p"]) 	+ 
-		(@twenty_p 		* values["20p"]) 	+ 
-		(@fifty_p 		* values["50p"]) 	+ 
-		(@one_pound 	* values["£1"])		+ 
-		(@two_pounds 	* values["£2"])
+		(@one_p * values["1p"]) 	+ 
+		(@two_p * values["2p"]) 	+ 
+		(@five_p * values["5p"]) + 
+		(@ten_p * values["10p"]) + 
+		(@twenty_p * values["20p"])	+ 
+		(@fifty_p * values["50p"]) + 
+		(@one_pound * values["£1"])	+ 
+		(@two_pounds * values["£2"])
 	end
 
 	def receive(cash)
 		c = convert(cash)
 		amount = change(c)
 			amount.each do |coin|
-				@one_p 		+= 1 if coin == 1
-				@two_p 		+= 1 if coin == 2
-				@five_p 	+= 1 if coin == 5
-				@ten_p 		+= 1 if coin == 10
-				@twenty_p 	+= 1 if coin == 20
-				@fifty_p 	+= 1 if coin == 50
-				@one_pound 	+= 1 if coin == 100
+				@one_p += 1 if coin == 1
+				@two_p += 1 if coin == 2
+				@five_p += 1 if coin == 5
+				@ten_p += 1 if coin == 10
+				@twenty_p += 1 if coin == 20
+				@fifty_p += 1 if coin == 50
+				@one_pound += 1 if coin == 100
 				@two_pounds += 1 if coin == 200
 			end
 			@total = total
 	end
-	
+
 	def convert(cash)
 		if cash.class == String
 			return cash.to_f if cash.include? "p"
@@ -63,6 +63,8 @@ class Coins
 			return "£#{cash.to_i/100}" if cash >= 100
 		end
 	end
+	
+
 
 	def change(amount)
 		available_coins = values.values.reverse
@@ -76,7 +78,7 @@ class Coins
 				coin = available_coins[index]
 			end
 			coins << coin
-			remaining_amount = remaining_amount - coin
+			remaining_amount -= coin
 		end
 		coins
 	end

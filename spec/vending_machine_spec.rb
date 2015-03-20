@@ -1,9 +1,10 @@
 require 'vending_machine'
 require 'product'
+require 'coins'
 
 describe Vending_machine do 
 	
-	let (:vending_machine) 	{Vending_machine.new}
+	let(:vending_machine) 	{Vending_machine.new}
 	let(:tango)				{Product.new "Tango", 150.0, 20}
 	let(:kitkat)			{Product.new "KitKat", 200.0, 10}
 	let(:pepsi)				{Product.new "Pepsi", 100.0, 30}
@@ -16,6 +17,10 @@ describe Vending_machine do
 
 		it 'products have a price' do 
 			expect(vending_machine.price("Tango")).to eq 150
+		end
+
+		it 'contains coins when created' do 
+			expect(vending_machine.coins).to eq [1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10, 20, 20, 20, 20, 20, 50, 50, 50, 50, 50, 100, 100, 200, 200]
 		end
 
 	# it 'contains change when created' do 
