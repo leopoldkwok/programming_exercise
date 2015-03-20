@@ -39,6 +39,9 @@ How to run the tests:
 $ rspec
 ```
 
+Instructions
+-------------
+
 Design a vending machine in code. The vending machine should perform as follows:
 
 Once an item is selected and the appropriate amount of money is inserted, the vending machine should return the correct product.
