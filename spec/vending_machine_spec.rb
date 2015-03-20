@@ -59,6 +59,18 @@ describe Vending_machine do
 		expect(vending_machine.convert("£1")).to eq 100
 	end
 
+	it 'contains 20 cans of Tango' do 
+		expect(vending_machine.quantity("Tango")).to eq 20
+	end
+
+	it 'contains 10 packs of Kit-Kat' do 
+		expect(vending_machine.quantity("Kit-Kat")).to eq 10
+	end
+
+	it 'contains 30 cans of Pepsi' do 
+		expect(vending_machine.quantity("Pepsi")).to eq 30
+	end
+
 	it 'returns a product when selected and no change if the money provided is correct' do 
 		expect(vending_machine.select("Tango","£1.5")).to eq "Your product: Tango"
 	end
@@ -67,5 +79,8 @@ describe Vending_machine do
 		expect(vending_machine.select("Tango", "£2")).to eq "Your product: Tango - Change:50p"
 	end
 
+	it 'requests for more money if it is not enough' do 
+		expect(vending_machine.select("Kit-Kat", "£1")).to eq "Please insert another £1"
+	end
 
 end

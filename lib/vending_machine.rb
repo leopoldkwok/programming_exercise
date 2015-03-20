@@ -16,9 +16,9 @@ class Vending_machine
 
 	def products
 		[
-			{product: {"Tango"		=> 150.0}, quantity: nil},
-		 	{product: {"Kit-Kat" 	=> 2}, quantity: nil},
-		 	{product: {"Pepsi"		=> 1}, quantity: nil}
+			{product: {"Tango"		=> 150.0}, quantity: 20},
+		 	{product: {"Kit-Kat" 	=> 200.0}, quantity: 10},
+		 	{product: {"Pepsi"		=> 100.0}, quantity: 30}
 		 ]
 	end
 
@@ -31,10 +31,15 @@ class Vending_machine
 		p[0][:product][product]
 	end
 
+	def quantity(product)
+		quantity = products.select{|p| p[:product][product]}
+		quantity[0][:quantity]
+	end
+
 	def convert(price)
 		if price.class == Fixnum || price.class == Float
 			return "#{price.to_i}p" if price < 100
-			return "£#{price.to_i/100}" if price >=100
+			return "£#{price.to_i/100}" if price >= 100
 		end
 
 		if price.class == String
@@ -53,6 +58,11 @@ class Vending_machine
 		if new_price > price(product)
 			change = convert(new_price - price(product))
 			return "Your product: #{product} - Change:#{change}"
+		end
+
+		if new_price < price(product)
+			amount = convert(price(product)- new_price)
+			return "Please insert another #{amount}"
 		end
 	end
 
