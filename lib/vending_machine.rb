@@ -37,8 +37,8 @@ class Vending_machine
 	end
 
 	def quantity(product)
-		quantity = select(product)
-		quantity[0].quantity
+		q = select(product)
+		q[0].quantity
 	end
 
 	def price(product)
