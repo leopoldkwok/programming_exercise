@@ -77,11 +77,8 @@ class Vending_machine
 		end
 	end
 
-	
-
 	def remaining(product)
 		selected(product).quantity
 	end
-
 
 end

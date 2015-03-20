@@ -21,6 +21,4 @@ class Product
 		return "No more #{(self.name)}" if @quantity == 0
 		@quantity -=1
 	end
-
-
 end

@@ -64,8 +64,6 @@ class Coins
 		end
 	end
 	
-
-
 	def change(amount)
 		available_coins = values.values.reverse
 		coins = []

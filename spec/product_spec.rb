@@ -19,5 +19,4 @@ describe Product do
 		product.one_less
 		expect(product.quantity).to eq 19
 	end
-
 end

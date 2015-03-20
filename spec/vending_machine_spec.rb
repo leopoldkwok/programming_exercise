@@ -80,7 +80,3 @@ describe Vending_machine do
 	end
 
 end
-
-		# it 'requests for more money if it is not enough' do 
-		# 	expect(vending_machine.select("Kit-Kat", "£1")).to eq "Please insert another £1"
-		# end

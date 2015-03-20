@@ -50,6 +50,4 @@ describe Coins do
 		coins.receive("50p")
 		expect(coins.total).to eq 1090
 	end
-
-
 end
