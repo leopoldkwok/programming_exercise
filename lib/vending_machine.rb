@@ -1,5 +1,11 @@
 class Vending_machine
 
+	def initialize
+		@tango 	= Product.new "Tango",	150.0, 20
+		@kitkat = Product.new "KitKat",	200.0, 10
+		@pepsi 	= Product.new "Pepsi", 	100.0, 30
+	end
+
 	def change
 		{
 			"1p"	=> 10,
@@ -15,25 +21,29 @@ class Vending_machine
 	end
 
 	def products
-		[
-			{product: {"Tango"		=> 150.0}, quantity: 20},
-		 	{product: {"Kit-Kat" 	=> 200.0}, quantity: 10},
-		 	{product: {"Pepsi"		=> 100.0}, quantity: 30}
-		 ]
+		[@tango, @kitkat, @pepsi]
 	end
 
 	def products_names
-		products.map{|p|p[:product].keys}.flatten
+		products.map{|p| p.name}
 	end
 
-	def price(product)
-		p = products.select{|p| p[:product][product]}
-		p[0][:product][product]
+	def select(product)
+		products.select{|p|p.name == product}
+	end
+
+	def selected(product)
+		@selected = select(product)[0]
 	end
 
 	def quantity(product)
-		quantity = products.select{|p| p[:product][product]}
-		quantity[0][:quantity]
+		quantity = select(product)
+		quantity[0].quantity
+	end
+
+	def price(product)
+		p = select(product)
+		p[0].price
 	end
 
 	def convert(price)
@@ -49,21 +59,25 @@ class Vending_machine
 		end
 	end
 
-	def select(product, price)
-		new_price = convert(price)
+	def buy(product, amount)
+		new_price = convert(amount)
+
+		return "There are no more #{selected(product).name}" if remaining(product)==0
+		
 		if new_price == price(product)
-			return "Your product: " + product
+			selected(product).one_less
+			return "Your product:\n #{selected(product).name}"
 		end
 
 		if new_price > price(product)
 			change = convert(new_price - price(product))
-			return "Your product: #{product} - Change:#{change}"
-		end
-
-		if new_price < price(product)
-			amount = convert(price(product)- new_price)
-			return "Please insert another #{amount}"
+			return "Your product:\n #{selected(product).name}\nChange: #{change}"
 		end
 	end
+
+	def remaining(product)
+		selected(product).quantity
+	end
+
 
 end
